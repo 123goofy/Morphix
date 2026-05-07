@@ -2,38 +2,109 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Enter Password</title>
+  <title>Gaming Zone</title>
   <style>
-    body { background: #0a0a0a; display: flex; justify-content: center;
-           align-items: center; height: 100vh; margin: 0; font-family: Arial; }
-    .box { background: #1a1a2e; padding: 40px; border-radius: 12px;
-           text-align: center; border: 1px solid #e94560; }
-    h1 { color: #e94560; margin-bottom: 20px; }
-    input { padding: 10px; width: 220px; border-radius: 6px;
-            border: none; font-size: 16px; margin-bottom: 15px; }
-    button { padding: 10px 30px; background: #e94560; color: white;
-             border: none; border-radius: 6px; font-size: 16px; cursor: pointer; }
-    button:hover { background: #c73652; }
-    p { color: red; display: none; margin-top: 10px; }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { background: #0a0a0a; color: white; font-family: Arial; min-height: 100vh; }
+
+    /* PASSWORD SCREEN */
+    #lock-screen {
+      display: flex; justify-content: center; align-items: center;
+      height: 100vh; transition: opacity 0.6s ease;
+    }
+    .box {
+      background: #1a1a2e; padding: 40px; border-radius: 12px;
+      text-align: center; border: 1px solid #e94560;
+    }
+    .box h1 { color: #e94560; margin-bottom: 20px; }
+    .box input {
+      padding: 10px; width: 220px; border-radius: 6px;
+      border: none; font-size: 16px; margin-bottom: 15px; display: block; margin: 0 auto 15px;
+    }
+    .box button {
+      padding: 10px 30px; background: #e94560; color: white;
+      border: none; border-radius: 6px; font-size: 16px; cursor: pointer;
+    }
+    .box button:hover { background: #c73652; }
+    #error { color: red; margin-top: 10px; display: none; }
+
+    /* SITE CONTENT */
+    #site {
+      display: none;
+      padding: 40px;
+    }
+    #site h1 { color: #e94560; text-align: center; margin-bottom: 30px; }
+    .grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;
+    }
+    .card {
+      background: #1a1a2e; border-radius: 12px; padding: 20px;
+      text-align: center; border: 1px solid #e94560;
+    }
+    .card h2 { color: #e94560; }
+    .card p { color: #aaa; font-size: 14px; margin: 10px 0; }
+    .card a {
+      display: inline-block; padding: 8px 20px; background: #e94560;
+      color: white; border-radius: 6px; text-decoration: none;
+    }
+    .card a:hover { background: #c73652; }
   </style>
 </head>
 <body>
-  <div class="box">
-    <h1>🎮 Gaming Zone</h1>
-    <input type="password" id="pw" placeholder="Enter password" />
-    <br>
-    <button onclick="checkPassword()">Enter</button>
-    <p id="error">❌ Wrong password. Try again.</p>
+
+  <!-- PASSWORD SCREEN -->
+  <div id="lock-screen">
+    <div class="box">
+      <h1>🎮 Gaming Zone</h1>
+      <input type="password" id="pw" placeholder="Enter password" onkeydown="if(event.key==='Enter') checkPassword()" />
+      <button onclick="checkPassword()">🔓 Unlock</button>
+      <p id="error">❌ Wrong password. Try again.</p>
+    </div>
   </div>
+
+  <!-- SITE CONTENT (hidden until unlocked) -->
+  <div id="site">
+    <h1>🎮 Welcome to the Gaming Zone!</h1>
+    <div class="grid">
+
+      <div class="card">
+        <h2>Game 1</h2>
+        <p>Short description here</p>
+        <a href="game1.html">Play Now</a>
+      </div>
+
+      <div class="card">
+        <h2>Game 2</h2>
+        <p>Short description here</p>
+        <a href="game2.html">Play Now</a>
+      </div>
+
+      <div class="card">
+        <h2>Game 3</h2>
+        <p>Short description here</p>
+        <a href="game3.html">Play Now</a>
+      </div>
+
+    </div>
+  </div>
+
   <script>
     function checkPassword() {
       const input = document.getElementById('pw').value;
       if (input === 'YourPasswordHere') {
-        window.location.href = 'home.html';
+        // Fade out lock screen
+        const lock = document.getElementById('lock-screen');
+        lock.style.opacity = '0';
+        setTimeout(() => {
+          lock.style.display = 'none';
+          // Show the site
+          document.getElementById('site').style.display = 'block';
+        }, 600);
       } else {
         document.getElementById('error').style.display = 'block';
       }
     }
   </script>
+
 </body>
 </html>
